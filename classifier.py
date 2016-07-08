@@ -9,12 +9,15 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+import xgboost as xgb
 
 ###### LENDO O TREINO E TESTE ######
 train = pd.read_csv('input/train.csv', index_col='AnimalID')
 test = pd.read_csv('input/test.csv', index_col='ID')
 
 ###### RETIRANDO O OUTCOMESUBTYPE O NAME DO TREINO E TESTE ######
+train['has_name'] = train['Name'].apply(lambda x : not x )
+
 train.drop('OutcomeSubtype', axis=1, inplace=True)
 train.drop(['Name', 'DateTime'], axis=1, inplace=True)
 test.drop(['Name', 'DateTime'], axis=1, inplace=True)
